@@ -1,1 +1,1 @@
-# dmit-2008-assign-2
+# DMIT 2008 Assignment 2
