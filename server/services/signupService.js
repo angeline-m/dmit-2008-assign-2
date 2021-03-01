@@ -64,7 +64,7 @@ const formatErrors = function(errors){
     }
     //send warning if a user has the same email
     if(errors.emailDuplicate){
-        email = `a user with this email already exists`
+        warning.email = `a user with this email already exists`
     }
   
     return {user:null, warning}
