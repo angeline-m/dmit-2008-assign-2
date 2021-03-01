@@ -72,7 +72,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    res.render('login', {passwordWarning:"", emailWarning:"", email:"", password:""})
  })
 
- //Retrieve and validate credentials
+ //Retrieve and validate login credentials
  app.post('/login', (req, res)=>{
    // if your incomming name value pairs are alot then create an object
     const credentials = {
@@ -103,19 +103,6 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
        }
   })
     
- //Send login data and validate user
- app.post('/login', (req, res)=>{
-   // POST name value pairs in body request
-   const credentials = {
-     email:req.body.email,
-     password:req.body.password
-    }
-    
-    const isValidUser = loginService.authenticate(credentials)
-   
-    res.end()
- 
- })
 
  //Render signup page
  app.get('/signup', (req, res) => {
