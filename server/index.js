@@ -14,6 +14,9 @@ const loginService = require('./services/loginService')
 //Importing Signup Service
 const signupService = require('./services/signupService')
 
+//Importing User Service
+const userService = require('./services/userService')
+
 // create an instance of express
 const app = express()
  
@@ -136,11 +139,11 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
     }
  })
 
+ //Display users
  app.get('/api/v1/user', (req, res) => {
-    const fileService = require('./fileService')
-    const users = fileService.getFileContents('../data/users.json');
+    const users = userService.getUsers()
+    res.json(users)
  })
-
 
 // Final Middleware 
 // Catch all for any request not handled while express was
@@ -149,7 +152,6 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "../client/404.html"));
 });
-
 
 
 // Tell express app to listen for incomming request on a specific PORT

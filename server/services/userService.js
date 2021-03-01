@@ -1,4 +1,12 @@
-exports.getFileContents = (filePath)=>{
-    let fileContents = JSON.parse(fs.readFileSync(path.join(__dirname, filePath)))
-    return fileContents
+const userService = require('./fileService')
+
+exports.getUsers = () => {
+    var userArray = []
+    users = userService.getFileContents('../data/users.json')
+    users.forEach((user) => {
+        let userObject = {username: user.username, email: user.email}
+        userArray.push(userObject)
+    })
+    return userArray
  }
+
