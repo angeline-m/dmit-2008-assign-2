@@ -132,7 +132,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
           passwordWarning:isValidUser.warning.password,
           username:req.body.fullname,
           email:req.body.email,
-          password: ""
+          password: req.body.password
         })
     }
     else {
