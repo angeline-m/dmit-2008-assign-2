@@ -124,6 +124,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    const isValidUser = signupService.create(credentials)
 
    //if the user is null, render the signup page with the warning and persist the form data (except password), otherwise send them to the login page
+   //this was working until i added more error messages
     if(isValidUser.user === null){
         res.render('signup', {
           nameWarning:isValidUser.errors.name,
