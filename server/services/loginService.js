@@ -15,27 +15,27 @@ exports.authenticate = (credential)=>{
    const users = fileService.getFileContents('../data/users.json');
    // flush the authentication
    
- const authUser =  users.reduce((authObj, user)=>{
+  const authUser =  users.reduce((authObj, user)=>{
      
-    if(user.email === email){
-      authObj.validEmail = true;
-    }else{
-       // errorObj
-    }
+  if(user.email === email){
+    authObj.validEmail = true;
+  }else{
+      // errorObj
+  }
 
-    if(user.password === password){
-      authObj.validPassword = true;
-    }else{
-      // passwordError authObj.passwordError = "something"
-    }
+  if(user.password === password){
+    authObj.validPassword = true;
+  }else{
+    // passwordError authObj.passwordError = "something"
+  }
 
-    if(authObj.validEmail===true && authObj.validPassword===true){
-        authObj.user = user;
-    }
-         
-    return authObj
+  if(authObj.validEmail===true && authObj.validPassword===true){
+      authObj.user = user;
+  }
+        
+  return authObj
 
-   }, {validEmail:false, validPassword:false, user:null})
+  }, {validEmail:false, validPassword:false, user:null})
 
     // ternary opertoar   ()?true:false
     // if() else

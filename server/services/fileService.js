@@ -19,7 +19,7 @@ exports.getFileContents = (filePath)=>{
 }
 
 exports.writeFileContents = (filePath, data) =>{
-    let fileContents = getFileContents(filePath)
+    let fileContents = this.getFileContents(filePath)
     fileContents.push(data)
     fileContents = JSON.stringify(fileContents)
     fs.writeFileSync(path.join(__dirname, filePath), fileContents)

@@ -103,35 +103,37 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
           })
        }
   })
-    
-  //Retrieve and validate credentials
- app.post('/signup', (req, res)=>{
-
-  //grab the input form values
-   const credentials = {
-     name:req.body.fullname,
-     email:req.body.email,
-     password:req.body.password
-   }
-
-   //create user (hopefully)
-   const isValidUser = signupService.authenticate(credentials)
-
-  //if isValidUser is none, meaning that the user creation failed, we send a warning and ensure the form data persists
-  if(isValidUser.user === null){
-    res.render('signup', {
-      emailWarning:isValidUser.emailWarning, 
-      name:req.body.fullname,
-      email:req.body.email,
-      password:req.body.password
-    })
- }
-
- })
 
  //Render signup page
  app.get('/signup', (req, res) => {
-    res.render('signup', {emailWarning:""})
+    res.render('signup', {username: "", email: "", password: "", nameWarning: "", passwordWarning: "", emailWarning:""})
+ })
+
+  //Retrieve and validate credentials
+ app.post('/signup', (req, res) => {
+   const credentials = {
+    username:req.body.fullname,
+    email:req.body.email,
+    password:req.body.password
+   }
+   
+   //Go through the signupService file to create user and check for duplicate email
+   const isValidUser = signupService.create(credentials)
+
+   //if the user is null, render the signup page with the warning and persist the form data (except password), otherwise send them to the login page
+    if(isValidUser.user === null){
+        res.render('signup', {
+          nameWarning:isValidUser.error.name,
+          emailWarning:isValidUser.error.email,
+          password:isValidUser.error.password,
+          username:req.body.fullname,
+          email:req.body.email,
+          password: ""
+        })
+    }
+    else {
+      res.redirect('login')
+    }
  })
 
 
