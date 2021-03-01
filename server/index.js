@@ -126,9 +126,9 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    //if the user is null, render the signup page with the warning and persist the form data (except password), otherwise send them to the login page
     if(isValidUser.user === null){
         res.render('signup', {
-          nameWarning:isValidUser.error.name,
-          emailWarning:isValidUser.error.email,
-          password:isValidUser.error.password,
+          nameWarning:isValidUser.errors.name,
+          emailWarning:isValidUser.errors.email,
+          password:isValidUser.errors.password,
           username:req.body.fullname,
           email:req.body.email,
           password: ""
