@@ -136,6 +136,10 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
     }
  })
 
+ app.get('/users.html', (req, res) => {
+   
+ })
+
 
 // Final Middleware 
 // Catch all for any request not handled while express was
