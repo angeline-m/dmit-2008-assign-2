@@ -134,7 +134,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
   //if isValidUser is none, meaning that the user creation failed, we send a warning and ensure the form data persists
   if(isValidUser.user === null){
-    res.render('login', {
+    res.render('signup', {
       emailWarning:isValidUser.emailWarning, 
       name:req.body.fullname,
       email:req.body.email,
