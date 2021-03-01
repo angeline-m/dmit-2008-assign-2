@@ -129,7 +129,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
         res.render('signup', {
           nameWarning:isValidUser.warning.name,
           emailWarning:isValidUser.warning.email,
-          password:isValidUser.warning.password,
+          passwordWarning:isValidUser.warning.password,
           username:req.body.fullname,
           email:req.body.email,
           password: ""
