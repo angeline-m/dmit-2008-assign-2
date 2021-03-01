@@ -1,35 +1,38 @@
 const fileService = require('./fileService')
 
-exports.create = (credential) => {
+exports.authenticate = (credential) => {
     //retrieve info
-    const {name, email, password} = {...credential}
+    const {username, email, password} = {...credential}
 
     //retrieve users
     const users = fileService.getFileContents('../data/users.json');
 
-    let notAuth = false;
-
-    //go through the users and see if there is another user with the same email
-    users.forEach(function(value, index){
-        if (users[index].email === credential.email){
-            notAuth = true;
+    //authorize new user
+    const authUser =  users.reduce((authObj, user)=>{
+        if(user.email === email){
+          authObj.validEmail = false;
         }
-    })
+    
+        if(authObj.validEmail===true){
+            authObj.user = user;
+        }
+             
+        return authObj
+    
+       }, {validEmail:false, user:null})
 
-    //if the email is unique, add the new user
-    if (notAuth == false){
-        fileService.writeFileContents('../data/users.json', {name, email, password})
-    }
 
-    const created = notAuth == false ? {user: name, email, password} : formatErrors(notAuth)
-    return created
+    const auth0 = authUser.user ? {user:authUser.user}: formatErrors(authUser)
+    return auth0
 
 }
 
-const formatErrors = function(notAuth){
+const formatErrors = function(user){
     let emailWarning = ""
   
-    if(notAuth){ emailWarning= `a user with this email already exists`}
+    if(user.validEmail === false){
+        emailWarning= `a user with this email already exists`
+    }
   
     return {user:null, emailWarning}
   }

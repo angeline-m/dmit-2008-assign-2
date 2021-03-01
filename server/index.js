@@ -11,7 +11,8 @@ const cookSession = require('cookie-session')
 // Importing our Login Service Used With the POST Login Route
 const loginService = require('./services/loginService')
 
-
+//Importing Signup Service
+const signupService = require('./services/signupService')
 
 // create an instance of express
 const app = express()
@@ -103,13 +104,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
        }
   })
     
-
- //Render signup page
- app.get('/signup', (req, res) => {
-    res.render('signup')
- })
-
- //Retrieve and validate credentials
+  //Retrieve and validate credentials
  app.post('/signup', (req, res)=>{
 
   //grab the input form values
@@ -120,17 +115,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    }
 
    //create user (hopefully)
-   const isValidUser = signupService.create(credentials)
-
-  //if the isValidUser has a user returned
-  if( isValidUser.user !== null){
-    // set a session value isValid
-    if(!req.session.isValid){
-        req.session.isValid = true;
-    }
-    //send to home
-    res.redirect('index.html')
-  }
+   const isValidUser = signupService.authenticate(credentials)
 
   //if isValidUser is none, meaning that the user creation failed, we send a warning and ensure the form data persists
   if(isValidUser.user === null){
@@ -143,6 +128,12 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
  }
 
  })
+
+ //Render signup page
+ app.get('/signup', (req, res) => {
+    res.render('signup', {emailWarning:""})
+ })
+
 
 // Final Middleware 
 // Catch all for any request not handled while express was

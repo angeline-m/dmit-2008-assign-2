@@ -17,14 +17,14 @@
 
       <aside class="app-form">
         <header><h2 class="center">Sign Up For Your Free Trial Account</h2></header>
-          <form id="register">
+          <form id="register" action="/signup" action="POST">
        
             <div class="form-control">
                 <label for="fullname">Please enter your full name.</label>
                 <input id="fullname" type="text" name="fullname" required/>
             </div>
               <div class="form-control">
-                  <label for="email">Enter an valid email address<span class="warning"><%- emailWarning %> </span></label>
+                  <label for="email">Enter an valid email address<span class="warning"> <%- emailWarning %> </span></label>
                   <input id="email" type="email" name="email" placeholder="email address for the account" required/>
               </div>
 
