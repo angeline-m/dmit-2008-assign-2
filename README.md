@@ -9,10 +9,10 @@ The signup, login, and dashboard views are all rendered from the `index.js` file
 Make sure you go in your terminal and `npm install` to install all the necessary packages.
 
 The packages included in this project are:
-*cookie-session for user sessions
-*cors for Express middleware
-*dotenv for loading environment variables
-*ejs for templating HTML markup
-*express framework for the entire application/API
-*uuid for generating keys
-*nodemon to watch file changes while the project is being run
+- cookie-session for user sessions
+- cors for Express middleware
+- dotenv for loading environment variables
+- ejs for templating HTML markup
+- express framework for the entire application/API
+- uuid for generating keys
+- nodemon to watch file changes while the project is being run
