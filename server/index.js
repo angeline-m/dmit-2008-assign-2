@@ -127,9 +127,9 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    //this was working until i added more error messages
     if(isValidUser.user === null){
         res.render('signup', {
-          nameWarning:isValidUser.errors.name,
-          emailWarning:isValidUser.errors.email,
-          password:isValidUser.errors.password,
+          nameWarning:isValidUser.warning.name,
+          emailWarning:isValidUser.warning.email,
+          password:isValidUser.warning.password,
           username:req.body.fullname,
           email:req.body.email,
           password: ""
