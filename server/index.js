@@ -136,8 +136,9 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
     }
  })
 
- app.get('/users.html', (req, res) => {
-   
+ app.get('/api/v1/user', (req, res) => {
+    const fileService = require('./fileService')
+    const users = fileService.getFileContents('../data/users.json');
  })
 
 
