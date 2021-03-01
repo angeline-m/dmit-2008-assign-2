@@ -56,6 +56,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
  // Setup   app.use(express.urlencoded({extended:true}))
 
  // Basic Example of a Protected Route
+ //Go to dashboard if the request session is valid
  app.get('/dashboard', (req, res)=>{
     if(req.session.isValid){
       res.render('dashboard')
@@ -64,12 +65,14 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
     }
  })
 
+ //Render login page with empty warnings
  app.get('/login', (req, res)=>{
    // user template placed inside the views directory
    // res.render(view, data)   ejs.render(template, {data})
    res.render('login', {passwordWarning:"", emailWarning:"", email:"", password:""})
-
  })
+
+ //Retrieve and validate credentials
  app.post('/login', (req, res)=>{
    // if your incomming name value pairs are alot then create an object
     const credentials = {
@@ -100,7 +103,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
        }
   })
     
- 
+ //Send login data and validate user
  app.post('/login', (req, res)=>{
    // POST name value pairs in body request
    const credentials = {
@@ -108,15 +111,50 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
      password:req.body.password
     }
     
-    
     const isValidUser = loginService.authenticate(credentials)
    
     res.end()
  
  })
 
+ //Render signup page
  app.get('/signup', (req, res) => {
     res.render('signup')
+ })
+
+ //Retrieve and validate credentials
+ app.post('/signup', (req, res)=>{
+
+  //grab the input form values
+   const credentials = {
+     name:req.body.fullname,
+     email:req.body.email,
+     password:req.body.password
+   }
+
+   //create user (hopefully)
+   const isValidUser = signupService.create(credentials)
+
+  //if the isValidUser has a user returned
+  if( isValidUser.user !== null){
+    // set a session value isValid
+    if(!req.session.isValid){
+        req.session.isValid = true;
+    }
+    //send to home
+    res.redirect('index.html')
+  }
+
+  //if isValidUser is none, meaning that the user creation failed, we send a warning and ensure the form data persists
+  if(isValidUser.user === null){
+    res.render('login', {
+      emailWarning:isValidUser.emailWarning, 
+      name:req.body.fullname,
+      email:req.body.email,
+      password:req.body.password
+    })
+ }
+
  })
 
 // Final Middleware 
