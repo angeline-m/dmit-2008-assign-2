@@ -57,11 +57,11 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
  // Basic Example of a Protected Route
  app.get('/dashboard', (req, res)=>{
-          if(req.session.isValid){
-            res.render('dashboard')
-          }else{
-           res.redirect('/login')
-          }
+    if(req.session.isValid){
+      res.render('dashboard')
+    }else{
+      res.redirect('/login')
+    }
  })
 
  app.get('/login', (req, res)=>{
@@ -82,21 +82,21 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    
        //if the isValidUser has a user returned
        if( isValidUser.user !== null){
-             // set a session value isValid
-             if(!req.session.isValid){
-                 req.session.isValid = true;
-             }
-             res.redirect('dashboard')
+          // set a session value isValid
+          if(!req.session.isValid){
+              req.session.isValid = true;
+          }
+          res.redirect('dashboard')
        }
 
        if(isValidUser.user === null){
-           // req.body.email, req.body.password
-           res.render('login', {
-             emailWarning:isValidUser.emailWarning, 
-             passwordWarning:isValidUser.passwordWarning,
-             email:req.body.email,
-             password:req.body.password
-            })
+          // req.body.email, req.body.password
+          res.render('login', {
+            emailWarning:isValidUser.emailWarning, 
+            passwordWarning:isValidUser.passwordWarning,
+            email:req.body.email,
+            password:req.body.password
+          })
        }
   })
     
@@ -115,7 +115,9 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
  
  })
 
- 
+ app.get('/signup', (req, res) => {
+    res.render('signup')
+ })
 
 // Final Middleware 
 // Catch all for any request not handled while express was
